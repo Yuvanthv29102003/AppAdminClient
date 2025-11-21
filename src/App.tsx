@@ -1,15 +1,13 @@
-import { useState } from 'react'
-
-import './App.css'
+import { Sidebar } from './components/Sidebar'
 
 function App() {
-  
-
   return (
-    <div className='bg-blue-900'> 
-    
+    <div className="min-h-screen flex bg-black text-white">
+      <Sidebar />
+      <main className="flex-1 bg-neutral-950">
+        {/* Content area */}
+      </main>
     </div>
-   
   )
 }
 
