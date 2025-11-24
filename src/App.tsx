@@ -1,5 +1,6 @@
 import { Sidebar } from './components/Sidebar'
 import { Header } from './components/Header'
+import { TopInfluencers } from './pages/TopInfluencers'
 
 function App() {
   return (
@@ -7,7 +8,9 @@ function App() {
       <Header />
       <div className="flex flex-1">
         <Sidebar />
-        <main className="flex-1 bg-neutral-950" />
+        <main className="flex-1 bg-neutral-950">
+          <TopInfluencers />
+        </main>
       </div>
     </div>
   )
