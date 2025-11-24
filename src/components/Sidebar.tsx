@@ -12,6 +12,7 @@ import configurationsIcon from '../assets/configurations.svg';
 import leadsIcon from '../assets/leads.svg';
 import logoutIcon from '../assets/logout.svg';
 import arrowRightIcon from '../assets/arrow-right.svg';
+import arrowIcon from '../assets/arrow.svg';
 
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: dashboardIcon },
@@ -67,33 +68,59 @@ export function Sidebar() {
   const [isStoryMgmtOpen, setIsStoryMgmtOpen] = useState(false);
   const [activeLiveMgmtSubId, setActiveLiveMgmtSubId] = useState('all-live');
   const [isLiveMgmtOpen, setIsLiveMgmtOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const closeAllSubmenus = () => {
+    setIsAudienceOpen(false);
+    setIsUserMgmtOpen(false);
+    setIsPostMgmtOpen(false);
+    setIsStoryMgmtOpen(false);
+    setIsLiveMgmtOpen(false);
+  };
 
   return (
-    <aside className="relative mt-4 h-[1034px] w-[250px] bg-[#000000] text-[#dcdcdc] flex flex-col py-4">
+    <aside
+      className={
+        `relative mt-2 h-screen ${isCollapsed ? 'w-[96px]' : 'w-[250px]'} bg-[#000000] text-[#dcdcdc] flex flex-col py-4`
+      }
+      onMouseLeave={closeAllSubmenus}
+    >
       <nav className="flex-1 flex flex-col gap-0.5 mt-3">
         {menuItems.map((item) => {
           const isActive = item.id === activeId;
           const showArrow = item.id === 'reports' || item.id === 'configurations' || item.id === 'audience';
 
+          const openAudienceMenus = () => {
+            // Open second level on hover/click of Audience
+            if (isCollapsed) return;
+            setActiveId('audience');
+            setIsAudienceOpen(true);
+          };
+
           return (
             <button
               key={item.id}
               type="button"
+              onMouseEnter={() => {
+                if (!isCollapsed && item.id === 'audience') {
+                  openAudienceMenus();
+                }
+              }}
               onClick={() => {
                 if (item.id === 'audience') {
-                  setActiveId('audience');
-                  setIsAudienceOpen((prev) => !prev);
+                  // Toggle on click but ensure it's open
+                  if (isAudienceOpen && activeId === 'audience') {
+                    closeAllSubmenus();
+                  } else {
+                    openAudienceMenus();
+                  }
                 } else {
                   setActiveId(item.id);
-                  setIsAudienceOpen(false);
-                  setIsUserMgmtOpen(false);
-                  setIsPostMgmtOpen(false);
-                  setIsStoryMgmtOpen(false);
-                  setIsLiveMgmtOpen(false);
+                  closeAllSubmenus();
                 }
               }}
               className={
-                'relative flex items-center gap-3 px-8 h-11 text-sm font-medium transition-colors cursor-pointer ' +
+                'relative flex items-center gap-3 px-4 h-11 text-sm font-medium transition-colors cursor-pointer ' +
                 (isActive ? 'bg-[#1a1a1a]' : 'bg-transparent! hover:bg-transparent!')
               }
             >
@@ -102,10 +129,24 @@ export function Sidebar() {
                   className="absolute left-0 top-0 h-full w-[4px] bg-[linear-gradient(117.65deg,#8000FF_35%,#FF0091_67.19%)]"
                 />
               )}
-              <span className="w-[24px] h-[24px] flex items-center justify-center">
-                <img src={item.icon} alt={item.label} className="w-[24px] h-[24px] object-contain" />
+              <span
+                className={
+                  (isCollapsed ? 'w-[24px] h-[24px]' : 'w-[28px] h-[28px]') +
+                  ' flex items-center justify-center'
+                }
+              >
+                <img
+                  src={item.icon}
+                  alt={item.label}
+                  className={
+                    (isCollapsed ? 'w-[24px] h-[24px]' : 'w-[28px] h-[28px]') +
+                    ' object-contain transition-transform'
+                  }
+                />
               </span>
-              <span className="text-left">{item.label}</span>
+              {!isCollapsed && (
+                <span className="text-left">{item.label}</span>
+              )}
               {showArrow && (
                 <span className="ml-auto flex items-center justify-center">
                   <img
@@ -122,42 +163,35 @@ export function Sidebar() {
           );
         })}
       </nav>
-      {activeId === 'audience' && isAudienceOpen && (
+      {!isCollapsed && activeId === 'audience' && isAudienceOpen && (
         <div className="absolute top-[74px] left-full h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg">
           {audienceSubItems.map((subItem) => {
             const isSubActive = subItem.id === activeAudienceSubId;
+
+            const openThirdLevelFor = (id: string) => {
+              setActiveAudienceSubId(id);
+              setIsUserMgmtOpen(id === 'users');
+              setIsPostMgmtOpen(id === 'posts');
+              setIsStoryMgmtOpen(id === 'stories');
+              setIsLiveMgmtOpen(id === 'live');
+            };
 
             return (
               <button
                 key={subItem.id}
                 type="button"
+                onMouseEnter={() => {
+                  openThirdLevelFor(subItem.id);
+                }}
                 onClick={() => {
-                  setActiveAudienceSubId(subItem.id);
-                  if (subItem.id === 'users') {
-                    setIsUserMgmtOpen((prev) => !prev);
-                    setIsPostMgmtOpen(false);
-                    setIsStoryMgmtOpen(false);
-                    setIsLiveMgmtOpen(false);
-                  } else if (subItem.id === 'posts') {
-                    setIsPostMgmtOpen((prev) => !prev);
-                    setIsUserMgmtOpen(false);
-                    setIsStoryMgmtOpen(false);
-                    setIsLiveMgmtOpen(false);
-                  } else if (subItem.id === 'stories') {
-                    setIsStoryMgmtOpen((prev) => !prev);
-                    setIsUserMgmtOpen(false);
-                    setIsPostMgmtOpen(false);
-                    setIsLiveMgmtOpen(false);
-                  } else if (subItem.id === 'live') {
-                    setIsLiveMgmtOpen((prev) => !prev);
+                  // Toggle behavior on click: if already open, close; otherwise open
+                  if (activeAudienceSubId === subItem.id) {
                     setIsUserMgmtOpen(false);
                     setIsPostMgmtOpen(false);
                     setIsStoryMgmtOpen(false);
+                    setIsLiveMgmtOpen(false);
                   } else {
-                    setIsUserMgmtOpen(false);
-                    setIsPostMgmtOpen(false);
-                    setIsStoryMgmtOpen(false);
-                    setIsLiveMgmtOpen(false);
+                    openThirdLevelFor(subItem.id);
                   }
                 }}
                 className={
@@ -170,7 +204,7 @@ export function Sidebar() {
                   src={arrowRightIcon}
                   alt="Section navigation"
                   className={
-                    'w-[16px] h-[16px] object-contain ' +
+                    'w-[24px] h-[24px] object-contain ' +
                     (isSubActive ? '' : 'grayscale opacity-60')
                   }
                 />
@@ -180,33 +214,76 @@ export function Sidebar() {
         </div>
       )}
       <ThirdLevelPanel
-        visible={activeId === 'audience' && isAudienceOpen && activeAudienceSubId === 'posts' && isPostMgmtOpen}
+        visible={
+          !isCollapsed &&
+          activeId === 'audience' &&
+          isAudienceOpen &&
+          activeAudienceSubId === 'posts' &&
+          isPostMgmtOpen
+        }
         topClass="top-[118px]"
         items={postManagementSubItems}
         activeId={activePostMgmtSubId}
         onChange={setActivePostMgmtSubId}
       />
       <ThirdLevelPanel
-        visible={activeId === 'audience' && isAudienceOpen && activeAudienceSubId === 'stories' && isStoryMgmtOpen}
+        visible={
+          !isCollapsed &&
+          activeId === 'audience' &&
+          isAudienceOpen &&
+          activeAudienceSubId === 'stories' &&
+          isStoryMgmtOpen
+        }
         topClass="top-[162px]"
         items={storyManagementSubItems}
         activeId={activeStoryMgmtSubId}
         onChange={setActiveStoryMgmtSubId}
       />
       <ThirdLevelPanel
-        visible={activeId === 'audience' && isAudienceOpen && activeAudienceSubId === 'live' && isLiveMgmtOpen}
+        visible={
+          !isCollapsed &&
+          activeId === 'audience' &&
+          isAudienceOpen &&
+          activeAudienceSubId === 'live' &&
+          isLiveMgmtOpen
+        }
         topClass="top-[206px]"
         items={liveManagementSubItems}
         activeId={activeLiveMgmtSubId}
         onChange={setActiveLiveMgmtSubId}
       />
       <ThirdLevelPanel
-        visible={activeId === 'audience' && isAudienceOpen && activeAudienceSubId === 'users' && isUserMgmtOpen}
+        visible={
+          !isCollapsed &&
+          activeId === 'audience' &&
+          isAudienceOpen &&
+          activeAudienceSubId === 'users' &&
+          isUserMgmtOpen
+        }
         topClass="top-[74px]"
         items={userManagementSubItems}
         activeId={activeUserMgmtSubId}
         onChange={setActiveUserMgmtSubId}
       />
+      <div className="mt-auto flex justify-center mb-28">
+        <button
+          type="button"
+          onClick={() => {
+            const next = !isCollapsed;
+            setIsCollapsed(next);
+            if (next) {
+              closeAllSubmenus();
+            }
+          }}
+          className="w-[18px] h-[18px] flex items-center justify-center cursor-pointer"
+        >
+          <img
+            src={arrowIcon}
+            alt={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className={`w-[18px] h-[18px] object-contain ${isCollapsed ? '' : 'rotate-180'}`}
+          />
+        </button>
+      </div>
     </aside>
   );
 }
