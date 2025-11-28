@@ -8,6 +8,7 @@ export interface ThirdLevelPanelProps {
   items: ThirdLevelItem[];
   activeId: string;
   onChange: (id: string) => void;
+  isSidebarCollapsed?: boolean;
 }
 
 export const ThirdLevelPanel: FC<ThirdLevelPanelProps> = ({
@@ -16,12 +17,16 @@ export const ThirdLevelPanel: FC<ThirdLevelPanelProps> = ({
   items,
   activeId,
   onChange,
+  isSidebarCollapsed = false,
 }) => {
   if (!visible) return null;
 
+  // Calculate left position based on sidebar state
+  const leftPosition = isSidebarCollapsed ? 'left-[346px]' : 'left-[500px]';
+
   return (
     <div
-      className={`absolute ${topClass} left-[500px] h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg`}
+      className={`absolute ${topClass} ${leftPosition} h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg`}
     >
       {items.map((subItem) => {
         const isSubActive = subItem.id === activeId;

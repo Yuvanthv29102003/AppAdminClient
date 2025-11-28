@@ -35,7 +35,7 @@ const audienceSubItems = [
 
 const userManagementSubItems = [
   { id: 'top-influencer', label: 'Top Influencer' },
-  { id: 'audience-mgmt', label: 'Audience Management' },
+  { id: 'audience-mgmt', label: 'User Profile' },
 ];
 
 const postManagementSubItems = [
@@ -56,11 +56,16 @@ const liveManagementSubItems = [
   { id: 'live-users', label: 'Live Users' },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  currentPage: 'top-influencer' | 'user-profile';
+  setCurrentPage: (page: 'top-influencer' | 'user-profile') => void;
+}
+
+export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
   const [activeId, setActiveId] = useState('audience');
   const [activeAudienceSubId, setActiveAudienceSubId] = useState('users');
   const [isAudienceOpen, setIsAudienceOpen] = useState(false);
-  const [activeUserMgmtSubId, setActiveUserMgmtSubId] = useState('top-influencer');
+  const [activeUserMgmtSubId, setActiveUserMgmtSubId] = useState(currentPage === 'user-profile' ? 'audience-mgmt' : 'top-influencer');
   const [isUserMgmtOpen, setIsUserMgmtOpen] = useState(false);
   const [activePostMgmtSubId, setActivePostMgmtSubId] = useState('all-posts');
   const [isPostMgmtOpen, setIsPostMgmtOpen] = useState(false);
@@ -91,8 +96,7 @@ export function Sidebar() {
           const showArrow = item.id === 'reports' || item.id === 'configurations' || item.id === 'audience';
 
           const openAudienceMenus = () => {
-            // Open second level on hover/click of Audience
-            if (isCollapsed) return;
+            // Open second level on hover/click of Audience (works for both collapsed and expanded)
             setActiveId('audience');
             setIsAudienceOpen(true);
           };
@@ -102,7 +106,7 @@ export function Sidebar() {
               key={item.id}
               type="button"
               onMouseEnter={() => {
-                if (!isCollapsed && item.id === 'audience') {
+                if (item.id === 'audience') {
                   openAudienceMenus();
                 }
               }}
@@ -163,7 +167,7 @@ export function Sidebar() {
           );
         })}
       </nav>
-      {!isCollapsed && activeId === 'audience' && isAudienceOpen && (
+      {activeId === 'audience' && isAudienceOpen && (
         <div className="absolute top-[74px] left-full h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg">
           {audienceSubItems.map((subItem) => {
             const isSubActive = subItem.id === activeAudienceSubId;
@@ -215,7 +219,6 @@ export function Sidebar() {
       )}
       <ThirdLevelPanel
         visible={
-          !isCollapsed &&
           activeId === 'audience' &&
           isAudienceOpen &&
           activeAudienceSubId === 'posts' &&
@@ -225,10 +228,10 @@ export function Sidebar() {
         items={postManagementSubItems}
         activeId={activePostMgmtSubId}
         onChange={setActivePostMgmtSubId}
+        isSidebarCollapsed={isCollapsed}
       />
       <ThirdLevelPanel
         visible={
-          !isCollapsed &&
           activeId === 'audience' &&
           isAudienceOpen &&
           activeAudienceSubId === 'stories' &&
@@ -238,10 +241,10 @@ export function Sidebar() {
         items={storyManagementSubItems}
         activeId={activeStoryMgmtSubId}
         onChange={setActiveStoryMgmtSubId}
+        isSidebarCollapsed={isCollapsed}
       />
       <ThirdLevelPanel
         visible={
-          !isCollapsed &&
           activeId === 'audience' &&
           isAudienceOpen &&
           activeAudienceSubId === 'live' &&
@@ -251,10 +254,10 @@ export function Sidebar() {
         items={liveManagementSubItems}
         activeId={activeLiveMgmtSubId}
         onChange={setActiveLiveMgmtSubId}
+        isSidebarCollapsed={isCollapsed}
       />
       <ThirdLevelPanel
         visible={
-          !isCollapsed &&
           activeId === 'audience' &&
           isAudienceOpen &&
           activeAudienceSubId === 'users' &&
@@ -263,7 +266,15 @@ export function Sidebar() {
         topClass="top-[74px]"
         items={userManagementSubItems}
         activeId={activeUserMgmtSubId}
-        onChange={setActiveUserMgmtSubId}
+        onChange={(id) => {
+          setActiveUserMgmtSubId(id);
+          if (id === 'top-influencer') {
+            setCurrentPage('top-influencer');
+          } else if (id === 'audience-mgmt') {
+            setCurrentPage('user-profile');
+          }
+        }}
+        isSidebarCollapsed={isCollapsed}
       />
       <div className="mt-auto flex justify-center mb-28">
         <button
