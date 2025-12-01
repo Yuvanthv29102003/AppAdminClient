@@ -3,20 +3,22 @@ import { useState } from 'react';
 import { TopBar } from '../components/TopBar';
 import { Table, type TableColumn } from '../components/Table';
 import { Pagination } from '../components/Pagination';
-import { mockInfluencers, type InfluencerData } from '../constants/mockData';
+import { BoostPostInvoiceModal } from '../components/BoostPostInvoiceModal';
+import { mockBoostedPosts, type BoostedPostData } from '../constants/mockData';
 import editIcon from '../assets/edit.svg';
 import viewIcon from '../assets/view.svg';
 import blockIcon from '../assets/block.svg';
 import trashIcon from '../assets/trash.svg';
 
-export const TopInfluencers: FC = () => {
+export const BoostedPost: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedItems, setSelectedItems] = useState<InfluencerData[]>([]);
+  const [selectedItems, setSelectedItems] = useState<BoostedPostData[]>([]);
+  const [selectedPostForModal, setSelectedPostForModal] = useState<BoostedPostData | null>(null);
   const itemsPerPage = 10;
 
   // For now, using all data without filtering since search input was removed
-  const filteredData = mockInfluencers;
+  const filteredData = mockBoostedPosts;
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const paginatedData = filteredData.slice(
@@ -24,10 +26,10 @@ export const TopInfluencers: FC = () => {
     currentPage * itemsPerPage
   );
 
-  const handleCheckboxChange = (checkedItems: InfluencerData[]) => {
+  const handleCheckboxChange = (checkedItems: BoostedPostData[]) => {
     setSelectedItems(checkedItems);
     // Log selected items for debugging/demonstration purposes
-    console.log('Selected influencers:', checkedItems);
+    console.log('Selected boosted posts:', checkedItems);
   };
 
   const columns: TableColumn[] = [
@@ -35,7 +37,7 @@ export const TopInfluencers: FC = () => {
       key: 'userName',
       label: 'User Name',
       width: 'w-[320px]',
-      render: (value: InfluencerData['userName']) => (
+      render: (value: BoostedPostData['userName']) => (
         <div className="flex items-center gap-3">
           <img
             src={value.avatar}
@@ -44,38 +46,29 @@ export const TopInfluencers: FC = () => {
           />
           <div>
             <div className="font-medium text-[#0C0D0F] text-[14px]">{value.name}</div>
-            <div className="font-regular text-[#F8FAFF] text-[12px]">{value.email}</div>
+            <div className="font-regular text-[#FFFFFF] text-[12px]">{value.email}</div>
           </div>
         </div>
       )
     },
-    { key: 'aiUserId', label: 'AI User ID', width: 'w-[130px] pl-6' },
-    { key: 'mobileNo', label: 'Mobile no.', className: 'pl-4' },
-    { key: 'gender', label: 'Gender', className: 'pl-4' },
-    { key: 'dateOfBirth', label: 'Date of Birth', className: 'pl-4' },
-    { key: 'country', label: 'Country', className: 'pl-4' },
-    {
-      key: 'status',
-      label: 'Status',
-      className: 'text-left pl-4',
-      render: (value: string) => (
-        <span className={`py-1 text-xs rounded-full text-white`}>
-          {value}
-        </span>
-      )
-    },
-    { key: 'posts', label: 'Post', className: 'pl-4' },
+    { key: 'postId', label: 'Post ID', width: 'w-[130px] pl-6' },
+    { key: 'collaboration', label: 'Collaboration', className: 'pl-4' },
+    { key: 'uploadTime', label: 'Upload Time', className: 'pl-4' },
+    { key: "boostPrice", label: "Boost Price", className: 'pl-4' },
+    { key: "boostTime", label: "Boost Time", className: 'pl-4' },
+    { key: 'trafficRatio', label: 'Traffic Ratio', className: 'pl-4' },
     { key: 'userTraffic', label: 'User Traffic', className: 'pl-4' },
-    { key: 'totalLikes', label: 'Total Likes', className: 'pl-4' },
     {
       key: 'actions',
       label: 'Action',
       className: 'text-left pl-4',
-      render: () => (
+      render: (_, rowData: BoostedPostData) => (
         <div className="flex items-center gap-[3px] min-h-[20px]">
-          <button className="p-1 hover:bg-gray-100 rounded inline-flex items-center justify-center min-w-[20px] min-h-[20px]">
+          <button 
+            className="p-1 hover:bg-gray-100 rounded inline-flex items-center justify-center min-w-[20px] min-h-[20px]"
+            onClick={() => setSelectedPostForModal(rowData)}
+          >
             <img src={viewIcon} alt="View" className="w-4 h-4" />
-            {/* Hello UYuvanth */}
           </button>
           <button className="p-1 hover:bg-gray-100 rounded inline-flex items-center justify-center min-w-[20px] min-h-[20px]">
             <img src={editIcon} alt="Edit" className="w-4 h-4"/>
@@ -95,7 +88,7 @@ export const TopInfluencers: FC = () => {
     <div className="h-screen overflow-auto flex flex-col bg-[#4D54640D]">
       <div className="flex flex-1">
         <main className="flex-1 bg-[#4D54640D]">
-          <TopBar heading="Top Influencer" />
+          <TopBar heading="Boosted Post" />
           
           {/* Content Area */}
           <div className="p-6">
@@ -121,6 +114,15 @@ export const TopInfluencers: FC = () => {
           </div>
         </main>
       </div>
+      
+      {/* Boost Post Invoice Modal */}
+      {selectedPostForModal && (
+        <BoostPostInvoiceModal
+          isOpen={!!selectedPostForModal}
+          onClose={() => setSelectedPostForModal(null)}
+          postData={selectedPostForModal}
+        />
+      )}
     </div>
   );
 };

@@ -1,0 +1,280 @@
+import user from '../assets/user-icon.svg';
+
+export interface InfluencerData {
+  userName: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  aiUserId: string;
+  mobileNo: string;
+  gender: string;
+  dateOfBirth: string;
+  country: string;
+  status: string;
+  posts: number;
+  userTraffic: string;
+  totalLikes: string;
+}
+
+export interface TrendingPostData {
+  userName: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  postId: string;
+  collaboration: string;
+  uploadTime: string;
+  trafficRatio: string;
+  likeRatio: string;
+  userTraffic: string;
+  totalLikes: string;
+}
+
+export interface ReportedPostData {
+  userName: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  postId: string;
+  uploadTime: string;
+  trafficRatio: string;
+  likeRatio: string;
+  userTraffic: string;
+  reports: number;
+  totalLikes: string;
+}
+
+export interface BoostedPostData {
+  userName: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  postId: string;
+  collaboration: string;
+  uploadTime: string;
+  boostPrice: string;
+  boostTime: string;
+  trafficRatio: string;
+  userTraffic: string;
+}
+
+export const mockInfluencers: InfluencerData[] = [
+  {
+    userName: { name: 'John Doe', email: 'johnsot2@gmail.com', avatar: user },
+    aiUserId: 'A110030',
+    mobileNo: '+91 93097 86776',
+    gender: 'Male',
+    dateOfBirth: '04/12/1990',
+    country: 'India',
+    status: 'Blacklisted',
+    posts: 30,
+    userTraffic: '30.5k',
+    totalLikes: '10M'
+  },
+  {
+    userName: { name: 'Jane Smith', email: 'jane.smith@gmail.com', avatar: user },
+    aiUserId: 'A110031',
+    mobileNo: '+1 555-0123',
+    gender: 'Female',
+    dateOfBirth: '08/15/1992',
+    country: 'USA',
+    status: 'Active',
+    posts: 50,
+    userTraffic: '45.2k',
+    totalLikes: '8.5M'
+  },
+  {
+    userName: { name: 'Mike Johnson', email: 'mike.j@gmail.com', avatar: user },
+    aiUserId: 'A110032',
+    mobileNo: '+86 138-0000-0001',
+    gender: 'Male',
+    dateOfBirth: '03/22/1988',
+    country: 'China',
+    status: 'Active',
+    posts: 96,
+    userTraffic: '120k',
+    totalLikes: '25M'
+  },
+  {
+    userName: { name: 'Sarah Wilson', email: 'sarah.w@gmail.com', avatar: user },
+    aiUserId: 'A110033',
+    mobileNo: '+7 916-123-45-67',
+    gender: 'Female',
+    dateOfBirth: '11/30/1991',
+    country: 'Russia',
+    status: 'Active',
+    posts: 120,
+    userTraffic: '89.7k',
+    totalLikes: '15M'
+  },
+  {
+    userName: { name: 'David Lee', email: 'david.lee@gmail.com', avatar: user },
+    aiUserId: 'A110034',
+    mobileNo: '+1 416-555-0198',
+    gender: 'Male',
+    dateOfBirth: '06/18/1989',
+    country: 'Canada',
+    status: 'Active',
+    posts: 560,
+    userTraffic: '200k',
+    totalLikes: '50M'
+  },
+  {
+    userName: { name: 'Emma Brown', email: 'emma.b@gmail.com', avatar: user },
+    aiUserId: 'A110035',
+    mobileNo: '+1 212-555-0143',
+    gender: 'Female',
+    dateOfBirth: '09/25/1993',
+    country: 'US',
+    status: 'Active',
+    posts: 39,
+    userTraffic: '28.4k',
+    totalLikes: '7.2M'
+  },
+  {
+    userName: { name: 'Alex Chen', email: 'alex.chen@gmail.com', avatar: user },
+    aiUserId: 'A110036',
+    mobileNo: '+81 90-1234-5678',
+    gender: 'Male',
+    dateOfBirth: '02/14/1990',
+    country: 'Japan',
+    status: 'Active',
+    posts: 32,
+    userTraffic: '18.9k',
+    totalLikes: '4.5M'
+  },
+  {
+    userName: { name: 'Lisa Taylor', email: 'lisa.t@gmail.com', avatar: user },
+    aiUserId: 'A110037',
+    mobileNo: '+61 2-9876-5432',
+    gender: 'Female',
+    dateOfBirth: '07/08/1991',
+    country: 'Australia',
+    status: 'Active',
+    posts: 0,
+    userTraffic: '12.3k',
+    totalLikes: '2.1M'
+  },
+  {
+    userName: { name: 'Tom Anderson', email: 'tom.a@gmail.com', avatar: user },
+    aiUserId: 'A110038',
+    mobileNo: '+44 20-7946-0958',
+    gender: 'Male',
+    dateOfBirth: '12/01/1987',
+    country: 'UK',
+    status: 'Active',
+    posts: 78,
+    userTraffic: '56.8k',
+    totalLikes: '12M'
+  },
+  {
+    userName: { name: 'Nina Patel', email: 'nina.p@gmail.com', avatar: user },
+    aiUserId: 'A110039',
+    mobileNo: '+91 98765-43210',
+    gender: 'Female',
+    dateOfBirth: '05/19/1992',
+    country: 'India',
+    status: 'Active',
+    posts: 145,
+    userTraffic: '95.4k',
+    totalLikes: '22M'
+  },
+  {
+    userName: { name: 'Carlos Rodriguez', email: 'carlos.r@gmail.com', avatar: user },
+    aiUserId: 'A110040',
+    mobileNo: '+34 91-123-45-67',
+    gender: 'Male',
+    dateOfBirth: '10/10/1988',
+    country: 'Spain',
+    status: 'Active',
+    posts: 67,
+    userTraffic: '41.2k',
+    totalLikes: '9.8M'
+  },
+  {
+    userName: { name: 'Sophie Martin', email: 'sophie.m@gmail.com', avatar: user },
+    aiUserId: 'A110041',
+    mobileNo: '+33 1-42-86-83-26',
+    gender: 'Female',
+    dateOfBirth: '04/03/1991',
+    country: 'France',
+    status: 'Active',
+    posts: 89,
+    userTraffic: '62.7k',
+    totalLikes: '14.5M'
+  },
+  {
+    userName: { name: 'Ryan Kim', email: 'ryan.k@gmail.com', avatar: user },
+    aiUserId: 'A110042',
+    mobileNo: '+82 2-1234-5678',
+    gender: 'Male',
+    dateOfBirth: '08/28/1989',
+    country: 'South Korea',
+    status: 'Active',
+    posts: 234,
+    userTraffic: '156k',
+    totalLikes: '35M'
+  },
+  {
+    userName: { name: 'Olivia Garcia', email: 'olivia.g@gmail.com', avatar: user },
+    aiUserId: 'A110043',
+    mobileNo: '+52 55-1234-5678',
+    gender: 'Female',
+    dateOfBirth: '01/15/1990',
+    country: 'Mexico',
+    status: 'Active',
+    posts: 112,
+    userTraffic: '78.9k',
+    totalLikes: '18M'
+  },
+  {
+    userName: { name: 'James Wilson', email: 'james.w@gmail.com', avatar: user },
+    aiUserId: 'A110044',
+    mobileNo: '+27 11-234-5678',
+    gender: 'Male',
+    dateOfBirth: '06/22/1987',
+    country: 'South Africa',
+    status: 'Active',
+    posts: 45,
+    userTraffic: '33.1k',
+    totalLikes: '7.8M'
+  }
+];
+
+export const mockTrendingPosts: TrendingPostData[] = mockInfluencers.map((influencer, index) => ({
+  userName: influencer.userName,
+  postId: `P${String(index + 1).padStart(3, '0')}`,
+  collaboration: ['Brand X', 'Fashion Hub', 'Tech Corp', 'Beauty Plus', 'Sports Gear', 'Food Network', 'Music Studio', 'Travel Agency', 'Fitness Pro', 'Art Gallery', 'Auto World', 'Lifestyle Co'][index % 12],
+  uploadTime: ['2 hours ago', '4 hours ago', '6 hours ago', '8 hours ago', '12 hours ago', '1 day ago', '1 day ago', '2 days ago', '2 days ago', '3 days ago', '3 days ago', '4 days ago'][index % 12],
+  trafficRatio: ['85%', '78%', '92%', '73%', '88%', '81%', '76%', '84%', '79%', '87%', '72%', '83%'][index % 12],
+  likeRatio: ['92%', '88%', '95%', '81%', '90%', '87%', '83%', '89%', '85%', '91%', '78%', '86%'][index % 12],
+  userTraffic: influencer.userTraffic,
+  totalLikes: influencer.totalLikes,
+  reports: [5, 12, 3, 8, 15, 2, 9, 6, 11, 4, 7, 14][index % 12]
+}));
+
+export const mockReportedPosts: ReportedPostData[] = mockInfluencers.slice(0, 8).map((influencer, index) => ({
+  userName: influencer.userName,
+  postId: `P${String(index + 1).padStart(3, '0')}`,
+  uploadTime: ['2 days ago', '1 week ago', '3 days ago', '5 days ago', '2 weeks ago', '4 days ago', '1 day ago', '6 days ago'][index],
+  trafficRatio: ['85%', '78%', '92%', '73%', '88%', '81%', '76%', '84%'][index],
+  likeRatio: ['92%', '88%', '95%', '81%', '90%', '87%', '83%', '89%'][index],
+  userTraffic: influencer.userTraffic,
+  reports: [15, 8, 23, 5, 12, 19, 7, 11][index],
+  totalLikes: influencer.totalLikes
+}));
+
+export const mockBoostedPosts: BoostedPostData[] = mockInfluencers.slice(0, 10).map((influencer, index) => ({
+  userName: influencer.userName,
+  postId: `P${String(index + 1).padStart(3, '0')}`,
+  collaboration: ['Brand X', 'Fashion Hub', 'Tech Corp', 'Beauty Plus', 'Sports Gear', 'Food Network', 'Music Studio', 'Travel Agency', 'Fitness Pro', 'Art Gallery'][index],
+  uploadTime: ['2 hours ago', '4 hours ago', '6 hours ago', '8 hours ago', '12 hours ago', '1 day ago', '1 day ago', '2 days ago', '2 days ago', '3 days ago'][index],
+  boostPrice: ['$50', '$75', '$100', '$125', '$150', '$200', '$175', '$90', '$110', '$85'][index],
+  boostTime: ['2 hours', '4 hours', '6 hours', '8 hours', '12 hours', '24 hours', '18 hours', '3 hours', '5 hours', '7 hours'][index],
+  trafficRatio: ['85%', '78%', '92%', '73%', '88%', '81%', '76%', '84%', '79%', '87%'][index],
+  userTraffic: influencer.userTraffic
+}));

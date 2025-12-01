@@ -1,16 +1,29 @@
 import { Sidebar } from './components/Sidebar'
 import { Header } from './components/Header'
 import { TopInfluencers } from './pages/TopInfluencers'
-import { UserProfile } from './pages/UserProfile'
+import { UserProfile } from './pages/Users/UserProfile'
+import { TrendingPosts } from './pages/TrendingPosts'
+import { ReportPostList } from './pages/Users/ReportPostList'
+import { BoostedPost } from './pages/BoostedPost'
 import { useState } from 'react'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'top-influencer' | 'user-profile'>('top-influencer')
+  const [currentPage, setCurrentPage] = useState<'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts'>('top-influencer')
 
   const renderPage = () => {
     switch (currentPage) {
       case 'user-profile':
         return <UserProfile />
+      
+      case 'trending-posts':
+        return <TrendingPosts />
+      
+      case 'reported-posts':
+        return <ReportPostList />
+
+      case 'boosted-posts':
+        return <BoostedPost />
+      
       case 'top-influencer':
       default:
         return <TopInfluencers />

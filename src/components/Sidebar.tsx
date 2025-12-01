@@ -57,8 +57,8 @@ const liveManagementSubItems = [
 ];
 
 interface SidebarProps {
-  currentPage: 'top-influencer' | 'user-profile';
-  setCurrentPage: (page: 'top-influencer' | 'user-profile') => void;
+  currentPage: 'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts';
+  setCurrentPage: (page: 'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts') => void;
 }
 
 export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
@@ -86,7 +86,7 @@ export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
   return (
     <aside
       className={
-        `relative mt-2 h-screen ${isCollapsed ? 'w-[96px]' : 'w-[250px]'} bg-[#000000] text-[#dcdcdc] flex flex-col py-4`
+        `relative mt-2 h-screen z-50 ${isCollapsed ? 'w-[96px]' : 'w-[250px]'} bg-[#000000] text-[#dcdcdc] flex flex-col py-4`
       }
       onMouseLeave={closeAllSubmenus}
     >
@@ -152,12 +152,12 @@ export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
                 <span className="text-left">{item.label}</span>
               )}
               {showArrow && (
-                <span className="ml-auto flex items-center justify-center">
+                <span className="flex items-center justify-center w-6 h-6">
                   <img
                     src={arrowRightIcon}
                     alt="Section navigation"
                     className={
-                      'w-[24px] h-[24px] object-contain ' +
+                      'w-[24px] h-[24px] object-contain ' + 
                       (isActive ? '' : 'grayscale opacity-60')
                     }
                   />
@@ -168,7 +168,7 @@ export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
         })}
       </nav>
       {activeId === 'audience' && isAudienceOpen && (
-        <div className="absolute top-[74px] left-full h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg">
+        <div className="absolute top-[74px] left-full h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg z-50">
           {audienceSubItems.map((subItem) => {
             const isSubActive = subItem.id === activeAudienceSubId;
 
@@ -227,7 +227,16 @@ export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
         topClass="top-[118px]"
         items={postManagementSubItems}
         activeId={activePostMgmtSubId}
-        onChange={setActivePostMgmtSubId}
+        onChange={(id) => {
+          setActivePostMgmtSubId(id);
+          if (id === 'trending') {
+            setCurrentPage('trending-posts');
+          } else if (id === 'reported') {
+            setCurrentPage('reported-posts');
+          } else if (id === 'boost') {
+            setCurrentPage('boosted-posts');
+          }
+        }}
         isSidebarCollapsed={isCollapsed}
       />
       <ThirdLevelPanel

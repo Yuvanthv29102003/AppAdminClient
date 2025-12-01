@@ -26,7 +26,7 @@ export const ThirdLevelPanel: FC<ThirdLevelPanelProps> = ({
 
   return (
     <div
-      className={`absolute ${topClass} ${leftPosition} h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg`}
+      className={`absolute ${topClass} ${leftPosition} h-auto w-[250px] bg-[#000000] text-[#dcdcdc] shadow-lg z-50`}
     >
       {items.map((subItem) => {
         const isSubActive = subItem.id === activeId;

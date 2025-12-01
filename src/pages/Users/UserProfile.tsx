@@ -1,19 +1,17 @@
 import type { FC } from 'react';
-import { TopBar } from '../components/TopBar';
-import { PostManagement } from '../components/PostManagement';
-import { PostGrid } from '../components/PostGrid';
-import userIcon from '../assets/user-profile.svg';
-import editIcon from '../assets/edit.svg';
+import { TopBar } from '../../components/TopBar';
+import { PostManagement } from '../../components/PostManagement';
+import { PostGrid } from '../../components/PostGrid';
+import userIcon from '../../assets/user-profile.svg';
+import editIcon from '../../assets/edit.svg';
 
 export const UserProfile: FC = () => {
   return (
-    <div className="h-screen overflow-hidden bg-black">
-      <div className="flex flex-1">
-        <main className="flex-1 bg-black">
-          <TopBar heading="User Profile" />
-          
-          {/* Content Area */}
-          <div className="p-6">
+    <div className="h-full overflow-hidden">
+      <TopBar heading="User Profile" />
+      
+      {/* Content Area */}
+      <div className="p-6">
             <div className="flex gap-8">
               {/* Left Side - User Details */}
               <div className="w-1/3">
@@ -104,8 +102,6 @@ export const UserProfile: FC = () => {
               </div>
             </div>
           </div>
-        </main>
-      </div>
     </div>
   );
 };
