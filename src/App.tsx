@@ -5,10 +5,11 @@ import { UserProfile } from './pages/Users/UserProfile'
 import { TrendingPosts } from './pages/TrendingPosts'
 import { ReportPostList } from './pages/Users/ReportPostList'
 import { BoostedPost } from './pages/BoostedPost'
+import { LiveUsersList } from './pages/Users/LiveUsersList'
 import { useState } from 'react'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts'>('top-influencer')
+  const [currentPage, setCurrentPage] = useState<'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts' | 'live-users'>('top-influencer')
 
   const renderPage = () => {
     switch (currentPage) {
@@ -23,6 +24,9 @@ function App() {
 
       case 'boosted-posts':
         return <BoostedPost />
+
+      case 'live-users':
+        return <LiveUsersList />
       
       case 'top-influencer':
       default:

@@ -62,6 +62,21 @@ export interface BoostedPostData {
   userTraffic: string;
 }
 
+export interface LiveUserData {
+  userName: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
+  userId: string;
+  collaboration: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  traffic: string;
+  country: string;
+}
+
 export const mockInfluencers: InfluencerData[] = [
   {
     userName: { name: 'John Doe', email: 'johnsot2@gmail.com', avatar: user },
@@ -274,7 +289,18 @@ export const mockBoostedPosts: BoostedPostData[] = mockInfluencers.slice(0, 10).
   collaboration: ['Brand X', 'Fashion Hub', 'Tech Corp', 'Beauty Plus', 'Sports Gear', 'Food Network', 'Music Studio', 'Travel Agency', 'Fitness Pro', 'Art Gallery'][index],
   uploadTime: ['2 hours ago', '4 hours ago', '6 hours ago', '8 hours ago', '12 hours ago', '1 day ago', '1 day ago', '2 days ago', '2 days ago', '3 days ago'][index],
   boostPrice: ['$50', '$75', '$100', '$125', '$150', '$200', '$175', '$90', '$110', '$85'][index],
-  boostTime: ['2 hours', '4 hours', '6 hours', '8 hours', '12 hours', '24 hours', '18 hours', '3 hours', '5 hours', '7 hours'][index],
+  boostTime: ['2 hours', '4 hours', '6 hours', '8 hours ago', '12 hours', '24 hours', '18 hours', '3 hours', '5 hours', '7 hours'][index],
   trafficRatio: ['85%', '78%', '92%', '73%', '88%', '81%', '76%', '84%', '79%', '87%'][index],
   userTraffic: influencer.userTraffic
+}));
+
+export const mockLiveUsers: LiveUserData[] = mockInfluencers.slice(0, 15).map((influencer, index) => ({
+  userName: influencer.userName,
+  userId: `U${String(index + 1).padStart(5, '0')}`,
+  collaboration: ['Brand X', 'Fashion Hub', 'Tech Corp', 'Beauty Plus', 'Sports Gear', 'Food Network', 'Music Studio', 'Travel Agency', 'Fitness Pro', 'Art Gallery', 'Gaming Zone', 'Photo Lab', 'Video Hub', 'Social Media', 'News Portal'][index],
+  date: ['2024-12-01', '2024-12-01', '2024-11-30', '2024-11-30', '2024-11-29', '2024-11-29', '2024-11-28', '2024-11-28', '2024-11-27', '2024-11-27', '2024-11-26', '2024-11-26', '2024-11-25', '2024-11-25', '2024-11-24'][index],
+  startTime: ['09:00 AM', '10:30 AM', '11:45 AM', '01:00 PM', '02:15 PM', '03:30 PM', '04:45 PM', '06:00 PM', '07:15 PM', '08:30 PM', '09:45 PM', '11:00 PM', '12:15 AM', '01:30 AM', '02:45 AM'][index],
+  endTime: ['10:30 AM', '12:00 PM', '01:15 PM', '02:30 PM', '03:45 PM', '05:00 PM', '06:15 PM', '07:30 PM', '08:45 PM', '10:00 PM', '11:15 PM', '12:30 AM', '01:45 AM', '03:00 AM', '04:15 AM'][index],
+  traffic: ['2.5k', '3.8k', '1.2k', '4.5k', '2.9k', '5.1k', '1.8k', '3.3k', '2.1k', '4.2k', '1.5k', '2.7k', '3.6k', '1.9k', '2.4k'][index],
+  country: ['USA', 'UK', 'Canada', 'Australia', 'Germany', 'France', 'India', 'Japan', 'Brazil', 'Mexico', 'Italy', 'Spain', 'Netherlands', 'Sweden', 'Norway'][index]
 }));

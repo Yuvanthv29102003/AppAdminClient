@@ -57,8 +57,8 @@ const liveManagementSubItems = [
 ];
 
 interface SidebarProps {
-  currentPage: 'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts';
-  setCurrentPage: (page: 'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts') => void;
+  currentPage: 'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts' | 'live-users';
+  setCurrentPage: (page: 'top-influencer' | 'user-profile' | 'trending-posts' | 'reported-posts' | 'boosted-posts' | 'live-users') => void;
 }
 
 export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
@@ -262,13 +262,18 @@ export function Sidebar({ currentPage, setCurrentPage }: SidebarProps) {
         topClass="top-[206px]"
         items={liveManagementSubItems}
         activeId={activeLiveMgmtSubId}
-        onChange={setActiveLiveMgmtSubId}
+        onChange={(id) => {
+          setActiveLiveMgmtSubId(id);
+          if (id === 'live-users') {
+            setCurrentPage('live-users');
+          }
+        }}
         isSidebarCollapsed={isCollapsed}
       />
       <ThirdLevelPanel
         visible={
           activeId === 'audience' &&
-          isAudienceOpen &&
+        isAudienceOpen &&
           activeAudienceSubId === 'users' &&
           isUserMgmtOpen
         }
